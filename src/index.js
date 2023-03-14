@@ -1,5 +1,5 @@
-import oneName from "./modules/one"
+import timer from "./modules/timer"
 import twoName from "./modules/two"
 
-oneName();
+timer('17 march 2023');
 twoName();
