@@ -1,34 +1,18 @@
 const forms = () => {
-  const inputs = document.querySelectorAll(
-    'input[type="text"], input[type="tel"], input[type="email"]'
-  );
+  const inputText = document.querySelector('input[type="text"]');
+  const inputEmail = document.querySelector('input[type="email"]');
+  const inputPhone = document.querySelector('input[type="tel"]');
 
-  const cyrillicRegex = /^[а-яёЁ\s-]*$/i;
-  const emailRegex = /^[a-zA-Z0-9._!~*'-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const phoneRegex = /^[\d\s()-]*$/;
+  inputText.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/[^а-яёЁ\s-]/gi, "");
+  });
 
-  const validateInput = (input, regex) => {
-    if (!regex.test(input.value)) {
-      input.setCustomValidity(`Please enter a valid ${input.type} value.`);
-    } else {
-      input.setCustomValidity("");
-    }
-  };
+  inputEmail.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/[^a-zA-Z0-9.@\-_!~*'']/g, "");
+  });
 
-  inputs.forEach((input) => {
-    if (input.type === "text") {
-      input.addEventListener("input", () => {
-        validateInput(input, cyrillicRegex);
-      });
-    } else if (input.type === "email") {
-      input.addEventListener("input", () => {
-        validateInput(input, emailRegex);
-      });
-    } else if (input.type === "tel") {
-      input.addEventListener("input", () => {
-        validateInput(input, phoneRegex);
-      });
-    }
+  inputPhone.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/[^\d\s()-]/gi, "");
   });
 };
 
