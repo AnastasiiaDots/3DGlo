@@ -1,26 +1,34 @@
+import { animate } from "./helpers";
+
 const modal = () => {
   const modal = document.querySelector(".popup");
   const buttons = document.querySelectorAll(".popup-btn");
 
+  // function to animate the modal
   const animateModal = () => {
-    modal.style.display = "block";
-    if (window.innerWidth < 768) {
-      return;
+    if (modal.style.display !== "block") {
+      modal.style.display = "block";
+      animate({
+        duration: 300,
+        timing(timeFraction) {
+          return Math.pow(timeFraction, 2);
+        },
+        draw(progress) {
+          modal.style.opacity = progress;
+        },
+      });
     }
-    modal.style.opacity = 0;
-
-    let opacity = 0;
-    const fadeIn = setInterval(() => {
-      opacity += 0.05;
-      modal.style.opacity = opacity;
-      if (opacity >= 1) clearInterval(fadeIn);
-    }, 20);
   };
 
+  // animate the modal after a delay
+  setTimeout(animateModal, 1500);
+
+  // add event listeners to the buttons
   buttons.forEach((btn) => {
     btn.addEventListener("click", animateModal);
   });
 
+  // close the modal when clicking outside of it
   modal.addEventListener("click", (e) => {
     if (
       !e.target.closest(".popup-content") ||
