@@ -20,9 +20,6 @@ const modal = () => {
     }
   };
 
-  // animate the modal after a delay
-  setTimeout(animateModal, 1500);
-
   // add event listeners to the buttons
   buttons.forEach((btn) => {
     btn.addEventListener("click", animateModal);
