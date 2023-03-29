@@ -8,15 +8,18 @@ const modal = () => {
   const animateModal = () => {
     if (modal.style.display !== "block") {
       modal.style.display = "block";
-      animate({
-        duration: 300,
-        timing(timeFraction) {
-          return Math.pow(timeFraction, 2);
-        },
-        draw(progress) {
-          modal.style.opacity = progress;
-        },
-      });
+      // check for screen size before animating
+      if (window.innerWidth >= 768) {
+        animate({
+          duration: 300,
+          timing(timeFraction) {
+            return Math.pow(timeFraction, 2);
+          },
+          draw(progress) {
+            modal.style.opacity = progress;
+          },
+        });
+      }
     }
   };
 
