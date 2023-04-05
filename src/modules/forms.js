@@ -13,7 +13,7 @@ const forms = () => {
   });
 
   inputPhone.addEventListener("input", (e) => {
-    e.target.value = e.target.value.replace(/[^\d\s()-]/gi, "");
+    e.target.value = e.target.value.replace(/[^\d\s()+-]/gi, "");
   });
 
   msg.addEventListener("input", (e) => {

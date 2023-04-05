@@ -11,11 +11,30 @@ timer("31 march 2023");
 menu();
 modal();
 calc(100);
+
 forms();
 tabs();
 slider();
 sendForm({
-  formId: ["form1", "form2", "form3"],
+  formId: "form1",
+  someElem: [
+    {
+      type: "block",
+      id: "total",
+    },
+  ],
+});
+sendForm({
+  formId: "form2",
+  someElem: [
+    {
+      type: "block",
+      id: "total",
+    },
+  ],
+});
+sendForm({
+  formId: "form3",
   someElem: [
     {
       type: "block",
