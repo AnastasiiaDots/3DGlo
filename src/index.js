@@ -11,7 +11,6 @@ timer("31 march 2023");
 menu();
 modal();
 calc(100);
-
 forms();
 tabs();
 slider();
