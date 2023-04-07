@@ -1,4 +1,4 @@
-import { validate } from "schema-utils";
+import validate from "./validate";
 
 const forms = () => {
   const inputText = document.querySelectorAll('input[type="text"]');
