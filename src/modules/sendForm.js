@@ -7,9 +7,9 @@ const sendForm = ({ formId, someElem = [] }) => {
   const successText = "Thank you! Our manager will contact you";
 
   const validate = (input) => {
-    const phoneRegex = /^\+?(\d{6,11}[\d()-]*\d)$/;
+    const phoneRegex = /^\+?\d{1,3}[-.\s()]?(\d{3}[-.\s()]?){2}\d{4}$/;
     const nameRegex = /^[\u0400-\u04FF\s]{2,}$/;
-    // const messageRegex = /^[\u0400-\u04FF\s\d\p{P}]+$/u;
+    const messageRegex = /^[а-яА-Я\s\d.,?!]+$/u;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
     let success = true;
@@ -32,14 +32,18 @@ const sendForm = ({ formId, someElem = [] }) => {
         item.classList.remove("error");
       }
 
-      // if (item.name === "user_message" && !messageRegex.test(item.value)) {
-      //   success = false;
-      //   if (!item.classList.contains("error")) {
-      //     item.classList.add("error");
-      //   }
-      // } else if (item.classList.contains("error")) {
-      //   item.classList.remove("error");
-      // }
+      if (item.name === "user_message") {
+        if (!item.value.trim() && item.value.trim() === "") {
+          return;
+        }
+
+        if (!messageRegex.test(item.value)) {
+          success = false;
+          if (!item.classList.contains("error")) {
+            item.classList.add("error");
+          }
+        }
+      }
 
       if (
         item.name === "user_email" &&
@@ -66,17 +70,17 @@ const sendForm = ({ formId, someElem = [] }) => {
   };
 
   const submitForm = () => {
-    const formElements = form.querySelectorAll("input");
+    // const formElements = form.querySelectorAll("input");
     const formData = new FormData(form);
     const formBody = {};
 
     form.setAttribute("novalidate", true);
 
-    let hasError = false; // Initialize hasError as false
+    let hasError = false;
 
-    for (let i = 0; i < formElements.length; i++) {
-      if (formElements[i].classList.contains("error")) {
-        hasError = true; // Set hasError to true if an error is found
+    for (let i = 0; i < input.length; i++) {
+      if (input[i].classList.contains("error")) {
+        hasError = true;
         break;
       }
     }
@@ -85,7 +89,7 @@ const sendForm = ({ formId, someElem = [] }) => {
     form.appendChild(statusBlock);
 
     if (!hasError) {
-      if (validate(formElements)) {
+      if (validate(input)) {
         statusBlock.textContent = "Uploading...";
         statusBlock.style.display = "block";
       }
@@ -112,12 +116,12 @@ const sendForm = ({ formId, someElem = [] }) => {
         delete formBody.total;
       }
 
-      if (validate(formElements)) {
+      if (validate(input)) {
         sendData(formBody)
           .then((data) => {
             statusBlock.textContent = successText;
             statusBlock.style.display = "block";
-            formElements.forEach((input) => {
+            input.forEach((input) => {
               input.value = "";
             });
             setTimeout(() => {
@@ -129,22 +133,24 @@ const sendForm = ({ formId, someElem = [] }) => {
             statusBlock.style.display = "block";
           });
       } else {
-        formElements.forEach((input) => {
+        input.forEach((input) => {
           input.classList.add("error");
         });
-        alert("Data is not valid");
+        // alert("Data is not valid");
       }
     }
   };
 
-  // input.forEach((item) => {
-  //   item.addEventListener("input", () => {
-  //     validate([item]);
-  //     if (!item.classList.contains("error")) {
-  //       item.classList.remove("error");
-  //     }
-  //   });
-  // });
+  input.forEach((item) => {
+    item.addEventListener("input", () => {
+      // validate([item]);
+      if (validate([item])) {
+        item.classList.remove("error");
+      } else {
+        item.classList.add("error");
+      }
+    });
+  });
 
   try {
     if (!form) {
