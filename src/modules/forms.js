@@ -1,9 +1,9 @@
 import validate from "./validate";
 
 const forms = () => {
-  const inputText = document.querySelectorAll('input[type="text"]');
-  const inputEmail = document.querySelectorAll('input[type="email"]');
-  const inputPhone = document.querySelectorAll('input[type="tel"]');
+  const inputText = document.querySelectorAll('input[name="user_name"]');
+  const inputEmail = document.querySelectorAll('input[name="user_email"]');
+  const inputPhone = document.querySelectorAll('input[name="user_phone"]');
   const msg = document.getElementById("form2-message");
 
   inputText.forEach((input) => {

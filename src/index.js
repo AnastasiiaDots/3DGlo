@@ -7,7 +7,7 @@ import tabs from "./modules/tabs";
 import slider from "./modules/slider";
 import sendForm from "./modules/sendForm";
 
-timer("31 march 2023");
+timer("10 april 2023");
 menu();
 modal();
 calc(100);
